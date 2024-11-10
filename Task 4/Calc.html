@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+</head>
+<style>
+.calc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+            
+.fullcalc {
+	background-color: #262626;
+	padding: 20px;
+	border-radius: 10px;
+	width: 300px;
+}
+		
+header {
+	background: #a6a6a6;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}
+
+#display {
+	width: 90%;
+	height: 50px;
+	margin-bottom: 20px;
+	font-size: 24px;
+	padding: 10px;
+	border: 5px solid #8c8c8c;
+	border-radius: 5px;
+	text-align: right;
+}
+
+.inputbtn {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+
+button {
+	height: 50px;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	background-color: #4d4d4d;
+	transition: background-color 0.2s ease;
+	color: #ffffff;
+}
+
+button:hover {
+	background-color: #b3b3b3;
+}
+
+button:active {
+	background-color: #8c8c8c;
+}
+		
+.operators {
+	background-color: #009933;
+	color: #ffffff;
+}
+		
+.clearbtn {
+	background-color:#ff6666
+}
+		
+footer {
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding: 10px;
+	width: 100%; 
+}
+
+</style>
+
+<body>
+<header>
+	<h1>Calculator Application</h1>
+</header>
+  <div class = "calc" >
+  <div class = "fullcalc" >
+	<input id = "display" readonly >
+		<div class = "inputbtn" >
+		
+		<button onclick = "Clear()" class = "clearbtn">clear</button>
+		<button onclick = "addvalue('(')">(</button>
+		<button onclick = "addvalue(')')">)</button>
+		<button onclick = "addvalue('/')" class = "operators" >/</button>
+		
+		<button onclick = "addvalue('7')">7</button>
+		<button onclick = "addvalue('8')">8</button>
+		<button onclick = "addvalue('9')">9</button>
+		<button onclick = "addvalue('*')" class = "operators" >x</button>
+		
+		<button onclick = "addvalue('4')">4</button>
+		<button onclick = "addvalue('5')">5</button>
+		<button onclick = "addvalue('6')">6</button>
+		<button onclick = "addvalue('-')" class = "operators" >-</button>
+		
+		<button onclick = "addvalue('1')">1</button>
+		<button onclick = "addvalue('2')">2</button>
+		<button onclick = "addvalue('3')">3</button>
+		<button onclick = "addvalue('+')" class = "operators" >+</button>
+		
+		<button onclick = "addvalue('0')">0</button>
+		<button onclick = "addvalue('.')">.</button>
+		<button onclick = "Calculate()" class = "operators" >=</button>
+		</div>
+	</div>
+  </div>
+    <script>
+	const display = document.getElementById("display");
+	function addvalue(Number){
+	display.value += Number;
+	}
+	function Clear() {
+	display.value = "";
+	}
+	function Calculate() {
+	try {
+	display.value = eval(display.value);
+	}
+	catch(error){
+	 display.value = "Error , Input Logical equation";
+	 }
+	 }
+	</script>
+	<footer>
+		<p>© 2024 Matthew Floris</p>
+	</footer>
+</body>
+</html>
