@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Management Application</title>
+<style>
+html {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: #f7f7f7;
+    color: #333;
+    display: flex;
+    flex-direction: column;  
+    justify-content: space-between;  
+    margin: 0;
+}
+
+header {
+    background: #00ff99;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.containerFirst {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 1rem;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.task-input, .filters {
+    margin-bottom: 20px;
+}
+
+.task-input h2, .filters h2 {
+    margin-bottom: 10px;
+}
+
+.task-input input[type="text"], .filters textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #387c39;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+label {
+    margin-bottom: 5px;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.filters button {
+    margin-top: 10px;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative;  
+}
+</style>
+</head>
+	<body>
+		<header>
+			<h1>Task Management Application</h1>
+		</header>
+
+		<div class="container">
+			
+			
+			<div class="task-input">
+			
+				<h2>Add Tasks</h2>
+				
+				<input type="text" id="new_task" placeholder="Add new task"><br><br>
+				<button onclick="Addtask()">Add Task</button>
+				
+				<h3>Select Where you want to add tasks to</h3>
+				
+				<label for="add_pending">Pending Tasks</label>
+				<input type="radio" id="add_pending" name="TypeTask" value="1">
+				
+				<label for="add_completed">Completed Tasks</label>
+				<input type="radio" id="add_completed" name="TypeTask" value="1">
+				
+			</div>
+
+			
+			<div class="filters">
+				<h2>Show Tasks</h2>
+				<textarea id="task_list" rows="10" cols="30"></textarea><br><br>
+				
+				<button onclick="displayAllTasks()">All</button>
+				<button onclick="displayCompletedTask()">Completed</button>
+				<button onclick="displayPendingTask()">Pending</button>
+				
+				<h2>Edit Tasks</h2>
+				<button onclick="editTasks()">Edit Task</button>
+				<button onclick="saveEditedTasks()">Save Edited Task</button>
+				
+				<h3>Select Task you want to edit</h3>
+				
+				<label for="edit_pending">Pending Tasks</label>
+				<input type="radio" id="edit_pending" name="editTask" value="1">
+				
+				<label for="edit_completed">Completed Tasks</label>
+				<input type="radio" id="edit_completed" name="editTask" value="1">
+				
+			</div>
+		</div>
+
+	<script>
+			let pendingTask = JSON.parse(localStorage.getItem('pendingTasks')) ;
+			let completedTask = JSON.parse(localStorage.getItem('completedTasks'));
+			const textarea = document.getElementById("task_list");
+
+			
+			function saveTasksToLocalStorage() {
+				localStorage.setItem('pendingTasks', JSON.stringify(pendingTask));
+				localStorage.setItem('completedTasks', JSON.stringify(completedTask));
+			}
+
+			
+			function displayAllTasks() {
+				textarea.value = "";
+				for (let task of pendingTask) {
+					textarea.value += task + '\n'; 
+				}
+				for (let task of completedTask) {
+					textarea.value += task + '\n';
+				}
+			}
+
+			
+			function displayCompletedTask() {
+				textarea.value = "";
+				for (let task of completedTask) {
+					textarea.value += task + '\n';
+				}
+			}
+
+			
+			function displayPendingTask() {
+				textarea.value = "";
+				for (let task of pendingTask) {
+					textarea.value += task + '\n'; 
+				}
+			}
+
+			
+			function Addtask() {
+				let newTask = document.getElementById("new_task").value;
+				let pending = document.getElementById("add_pending").checked;
+				let completed = document.getElementById("add_completed").checked;
+
+				if (newTask === "") {
+					alert("Please enter a task.");
+					return;
+				}
+
+				if (pending) {
+					pendingTask.push(newTask); 
+					alert("Task added to Pending Tasks");
+				} else if (completed) {
+					completedTask.push(newTask); 
+					alert("Task added to Completed Tasks");
+				} else {
+					alert("Please select where to add the task."); 
+				}
+
+				
+				document.getElementById("new_task").value = "";
+				
+				
+				saveTasksToLocalStorage();
+				
+				
+				displayAllTasks();
+			}
+
+		   
+			function editTasks() {
+				let pending = document.getElementById("edit_pending").checked;
+				let completed = document.getElementById("edit_completed").checked;
+
+				textarea.value = ""; 
+
+				if (pending) {
+					for (let task of pendingTask) {
+						textarea.value += task + '\n';
+					}
+				} else if (completed) {
+					for (let task of completedTask) {
+						textarea.value += task + '\n';
+					}
+				} else {
+					alert("Please select which tasks to edit.");
+				}
+			}
+
+			
+			function saveEditedTasks() {
+				let pending = document.getElementById("edit_pending").checked;
+				let completed = document.getElementById("edit_completed").checked;
+
+				if (pending) {
+					pendingTask.length = 0; 
+					let editedTasks = textarea.value.split('\n'); 
+					for (let task of editedTasks) {
+						if (task.trim() !== "") { 
+							pendingTask.push(task.trim());
+						}
+					}
+					alert("Pending tasks updated successfully.");
+				} else if (completed) {
+					completedTask.length = 0; 
+					let editedTasks = textarea.value.split('\n'); 
+					for (let task of editedTasks) {
+						if (task.trim() !== "") { 
+							completedTask.push(task.trim());
+						}
+					}
+					alert("Completed tasks updated successfully.");
+				} else {
+					alert("Please select which tasks to save.");
+				}
+
+
+				saveTasksToLocalStorage();
+
+				displayAllTasks();
+			}
+	</script>
+	<footer>
+		<p>© 2024 Matthew Floris</p>
+	</footer>
+	</body>	
+</html>
