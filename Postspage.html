@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="BlogFormat.css">
+		<title>Blog Post</title>
+	</head>
+	<body>
+		<header>
+			<h1>Welcome to My Blog Home page</h1>
+			<nav>
+			<p>
+			<a href="Homepage.html">Home</a>
+			 | 
+			<a href="Aboutpage.html">About Me</a>
+			 | 
+			<a href="Contactpage.html">Contact Me</a>
+			</p>
+			</nav>
+		</header>
+	<main>
+		<article>
+			<h2> Create Post </h2>
+				<form id="PostCreate">
+					<label for="name">Name:</label><br>
+					<input type="text" id="name" name="name" ><br><br>
+					<label for="blogpost">Message:</label><br>
+					<textarea id="blogpost" name="blogpost"></textarea><br><br>
+					<button type="submit" id="submit">Submit</button>
+				</form>
+				
+				<h2> Your Latest Post</h2>
+					<p id="Date"></p>
+					<p id="Name"></p>
+					<p id="Blogpost">This is the full content of my blog post. You can write multiple paragraphs here about the topic.</p>
+					
+				<h2> Other Posts </h2>
+					<textarea id="OtherPosts" readonly></textarea>
+		</article>			
+	</main>
+	
+	<script src="BlogScript.js"></script>
+	
+		<footer>
+			<p>© 2024 Matthew Floris</p>
+		</footer>
+	</body>
+</html>
+
